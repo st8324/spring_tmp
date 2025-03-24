@@ -167,6 +167,12 @@
 		    <artifactId>tiles-template</artifactId>
 		    <version>${org.apache.tiles-version}</version>
 		</dependency>  
+		<!-- 롬복 -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.36</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>
