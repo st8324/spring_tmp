@@ -2,6 +2,7 @@ package kr.kh.tmp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,14 @@ public class HomeController {
 	}
 	
 	@PostMapping("/signup")
-	public String signupPost(MemberVO member) {
+	public String signupPost(Model model, MemberVO member) {
 		if(memberService.signup(member)) {
-			
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {
-			
+			model.addAttribute("url", "/signup");
+			model.addAttribute("msg", "회원 가입에 실패했습니다.");
 		}
-		return "/member/signup";
+		return "message";
 	}
 }
