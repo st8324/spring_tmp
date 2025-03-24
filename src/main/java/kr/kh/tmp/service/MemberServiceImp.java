@@ -34,4 +34,22 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 	}
+
+	@Override
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		MemberVO user = memberDao.selectMember(member.getMe_id());
+		//아이디가 다른 경우
+		if(user == null) {
+			return null;
+		}
+		//비밀번호가 다른 경우
+		if(!passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+			return null;
+		}
+			
+		return user;
+	}
 }
