@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.tmp.dao.PostDAO;
 import kr.kh.tmp.model.vo.BoardVO;
+import kr.kh.tmp.model.vo.MemberVO;
 import kr.kh.tmp.model.vo.PostVO;
 
 @Service
@@ -50,5 +51,11 @@ public class PostServiceImp implements PostService {
 	@Override
 	public List<PostVO> getPostList(Integer bo_num) {
 		return postDao.selectPostList(bo_num);
+	}
+
+	@Override
+	public boolean insertPost(PostVO post, MemberVO user) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
