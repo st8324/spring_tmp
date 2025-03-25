@@ -9,7 +9,14 @@
 <body>
 	<h1>게시판 관리</h1>
 	<div class="board-list">
-	
+		<c:forEach items="${list}" var="board">
+			<form class="input-group mb-3" action="<c:url value="/admin/board/update"/>" method="post">
+			    <input type="hidden" name="bo_num" value="${board.bo_num }">
+			    <input type="text" class="form-control" placeholder="${board.bo_name}" name="bo_name" value="${board.bo_name}">
+			    <button type="submit" class="form-control btn btn-outline-warning">수정</button>
+			    <a href="<c:url value="/admin/board/delete?num=${board.bo_num}"/>" class="form-control btn btn-outline-danger">삭제</a>
+			 </form>
+		 </c:forEach>
 	</div>
 	<div class="board-insert">
 		<form action="<c:url value="/admin/board/insert"/>" method="post">

@@ -7,5 +7,13 @@
 	<insert id="insertBoard">
 		insert into board(bo_name) values(#{bo_name})
 	</insert>
-	
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board order by bo_num
+	</select>
+	<update id="updateBoard">
+		update board set bo_name = #{board.bo_name} where bo_num = #{board.bo_num}
+	</update>
+	<delete id="deleteBoard">
+		delete from board where bo_num = #{bo_num}
+	</delete>
 </mapper>
