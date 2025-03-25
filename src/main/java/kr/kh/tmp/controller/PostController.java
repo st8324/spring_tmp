@@ -56,6 +56,7 @@ public class PostController {
 			model.addAttribute("url", "/post/list");
 			model.addAttribute("msg", "게시글을 등록하지 못했습니다.");
 		}
+		
 		return "message";
 	}
 }
