@@ -16,4 +16,13 @@
 	<delete id="deleteBoard">
 		delete from board where bo_num = #{bo_num}
 	</delete>
+	<select id="selectPostList" resultType="PostVO">
+		select post.*, bo_name as po_bo_name 
+		from post
+		join board on po_bo_num = bo_num 
+		<if test="po_bo_num != 0">
+			where po_bo_num = #{po_bo_num}
+		</if>
+		order by po_num desc
+	</select>
 </mapper>

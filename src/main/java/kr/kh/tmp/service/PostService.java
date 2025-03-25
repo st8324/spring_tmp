@@ -3,6 +3,7 @@ package kr.kh.tmp.service;
 import java.util.List;
 
 import kr.kh.tmp.model.vo.BoardVO;
+import kr.kh.tmp.model.vo.PostVO;
 
 public interface PostService {
 
@@ -13,5 +14,7 @@ public interface PostService {
 	boolean updateBoard(BoardVO board);
 
 	boolean deleteBoard(int num);
+
+	List<PostVO> getPostList(Integer bo_num);
 
 }
