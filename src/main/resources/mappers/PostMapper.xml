@@ -30,4 +30,14 @@
 		insert into post(po_title, po_me_id, po_content, po_bo_num)
 		values(#{post.po_title},#{post.po_me_id},#{post.po_content}, #{post.po_bo_num})
 	</insert>
+	<update id="updateView">
+		update post set po_view = po_view + 1 where po_num = #{po_num}
+	</update>
+	
+	<select id="selectPost" resultType="PostVO">
+		select post.*, bo_name as po_bo_name 
+		from post
+		join board on po_bo_num = bo_num 
+		where po_num = #{po_num}
+	</select>
 </mapper>
