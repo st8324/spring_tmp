@@ -9,6 +9,10 @@
 <body>
 	<h1>게시글 상세</h1>
 	<div class="form-group">
+		<label>게시판</label>
+		<div class="form-control">${post.po_bo_name}</div>
+	</div>
+	<div class="form-group">
 		<label>제목</label>
 		<div class="form-control">${post.po_title}</div>
 	</div>
@@ -30,8 +34,14 @@
 		<label>내용</label>
 		<div class="form-control" style="min-height: 400px;">${post.po_content}</div>
 	</div>
-	<div class="mb-3">
+	<div class="mb-3 d-flex justify-content-between">
 		<a href="<c:url value="/post/list?bo_num=${post.po_bo_num}"/>" class="btn btn-outline-success">목록으로</a>
+		<c:if test="${post.po_me_id eq user.me_id }">
+			<div>
+				<a href="<c:url value="/post/update/${post.po_num}"/>" class="btn btn-outline-warning">수정</a>
+				<a href="<c:url value="/post/delete/${post.po_num}"/>" class="btn btn-outline-danger">삭제</a>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

@@ -71,4 +71,48 @@ public class PostController {
 		model.addAttribute("post", post);
 		return "/post/detail";
 	}
+	
+	@GetMapping("/delete/{po_num}")
+	public String delete(Model model, @PathVariable("po_num")int po_num, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(postService.deletePost(po_num, user)) {
+			model.addAttribute("url", "/post/list");
+			model.addAttribute("msg", "게시글을 삭제했습니다.");
+		}else {
+			model.addAttribute("url", "/post/detail/"+po_num);
+			model.addAttribute("msg", "게시글을 삭제하지 못했습니다.");
+		}
+		
+		return "message";
+	}
+	@GetMapping("/update/{po_num}")
+	public String update(Model model, @PathVariable("po_num")int po_num, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		PostVO post = postService.getPost(po_num);
+		//로그인 안했거나 없는 게시글이거나 작성자가 아니면
+		if(post == null || user == null || !post.getPo_me_id().equals(user.getMe_id())) {
+			model.addAttribute("url", "/post/detail/"+po_num);
+			model.addAttribute("msg", "작성자가 아니거나 없는 게시글입니다.");
+			return "message";
+		}
+		
+		model.addAttribute("post", post);
+		return "/post/update";
+	}
+	
+	@PostMapping("/update")
+	public String updatePost(Model model, PostVO post, HttpSession session) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(postService.updatePost(post, user)) {
+			model.addAttribute("msg", "게시글을 수정했습니다.");
+		}else {
+			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");
+		}
+		
+		model.addAttribute("url", "/post/detail/" + post.getPo_num());
+		return "message";
+	}
 }
