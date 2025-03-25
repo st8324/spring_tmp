@@ -15,7 +15,7 @@
 	  
 	  <!-- Links -->
 	  <ul class="navbar-nav">
-	  	<c:if test="${user == null}">
+	  	<c:if test="${user eq null}">
 		    <li class="nav-item">
 		      <a class="nav-link" href="<c:url value="/signup"/>">회원가입</a>
 		    </li>
@@ -23,10 +23,12 @@
 		      <a class="nav-link" href="<c:url value="/login"/>">로그인</a>
 		    </li>
 	    </c:if>
-	    <li class="nav-item">
-	      <a class="nav-link" href="<c:url value="/admin/board"/>">게시판 관리</a>
-	    </li>
-	    <c:if test="${user != null }">
+	    <c:if test="${user ne null && user.me_authority eq 'ADMIN' }">
+		    <li class="nav-item">
+		      <a class="nav-link" href="<c:url value="/admin/board"/>">게시판 관리</a>
+		    </li>
+	    </c:if>
+	    <c:if test="${user ne null }">
 		    <li class="nav-item">
 		      <a class="nav-link" href="<c:url value="/logout"/>">로그아웃</a>
 		    </li>
