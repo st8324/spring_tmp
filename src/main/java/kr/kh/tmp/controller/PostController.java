@@ -31,4 +31,15 @@ public class PostController {
 		model.addAttribute("bo_num", bo_num);
 		return "/post/list";
 	}
+	
+	@GetMapping("/insert")
+	public String insert(Model model, Integer bo_num) {
+		bo_num = bo_num == null ? 0 : bo_num;
+		
+		List<BoardVO> boardList = postService.getBoardList();
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("bo_num", bo_num);
+		return "/post/list";
+	}
 }

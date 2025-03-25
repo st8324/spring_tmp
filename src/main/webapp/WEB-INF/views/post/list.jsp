@@ -51,5 +51,8 @@
 		  	</c:if>
 		</tbody>
 	</table>
+	<div class="clearfix mb-3">
+		<a href="<c:url value="/post/insert?bo_num=${bo_num}"/>" class="btn btn-outline-success float-right">게시글 등록</a>
+	</div>
 </body>
 </html>
