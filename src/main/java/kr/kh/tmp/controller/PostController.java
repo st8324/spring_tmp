@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.tmp.model.vo.BoardVO;
+import kr.kh.tmp.model.vo.FileVO;
 import kr.kh.tmp.model.vo.MemberVO;
 import kr.kh.tmp.model.vo.PostVO;
 import kr.kh.tmp.service.PostService;
@@ -70,7 +71,11 @@ public class PostController {
 		//게시글을 가져와서 화면에 전달
 		PostVO post = postService.getPost(po_num);
 		
+		//첨부파일을 가져옴
+		List<FileVO> list = postService.getFileList(po_num);
+		
 		model.addAttribute("post", post);
+		model.addAttribute("list", list);
 		return "/post/detail";
 	}
 	

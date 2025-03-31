@@ -186,4 +186,9 @@ public class PostServiceImp implements PostService {
 		
 		return res;
 	}
+
+	@Override
+	public List<FileVO> getFileList(int po_num) {
+		return postDao.selectFileList(po_num);
+	}
 }
