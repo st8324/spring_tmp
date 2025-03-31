@@ -29,7 +29,7 @@ public interface PostService {
 
 	boolean deletePost(int po_num, MemberVO user);
 
-	boolean updatePost(PostVO post, MemberVO user);
+	boolean updatePost(PostVO post, MemberVO user, MultipartFile[] fileList, int[] delNums);
 
 	List<FileVO> getFileList(int po_num);
 

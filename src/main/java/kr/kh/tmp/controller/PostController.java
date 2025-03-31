@@ -104,16 +104,19 @@ public class PostController {
 			model.addAttribute("msg", "작성자가 아니거나 없는 게시글입니다.");
 			return "message";
 		}
+		List<FileVO> list = postService.getFileList(po_num);
 		
 		model.addAttribute("post", post);
+		model.addAttribute("list", list);
 		return "/post/update";
 	}
 	
 	@PostMapping("/update")
-	public String updatePost(Model model, PostVO post, HttpSession session) {
+	public String updatePost(Model model, PostVO post, HttpSession session, 
+			MultipartFile[] fileList, int [] delNums) {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(postService.updatePost(post, user)) {
+		if(postService.updatePost(post, user, fileList, delNums)) {
 			model.addAttribute("msg", "게시글을 수정했습니다.");
 		}else {
 			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");

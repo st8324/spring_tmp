@@ -58,4 +58,7 @@
 	<select id="selectFileList" resultType="FileVO">
 		select * from file where fi_po_num = #{fi_po_num}
 	</select>
+	<select id="selectFile" resultType="FileVO">
+		select * from file where fi_num = #{fi_num}
+	</select>
 </mapper>

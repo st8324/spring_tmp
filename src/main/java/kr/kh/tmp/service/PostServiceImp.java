@@ -172,7 +172,7 @@ public class PostServiceImp implements PostService {
 	}
 
 	@Override
-	public boolean updatePost(PostVO post, MemberVO user) {
+	public boolean updatePost(PostVO post, MemberVO user, MultipartFile[] fileList, int[] delNums) {
 		if(user == null || post == null) {
 			return false;
 		}
@@ -182,9 +182,28 @@ public class PostServiceImp implements PostService {
 		}
 		boolean res = postDao.updatePost(post);
 		
+		if(!res) {
+			return false;
+		}
 		//추후 첨부파일 수정
-		
-		return res;
+		//새 첨부파일 추가
+		if(fileList != null ) {
+			for(MultipartFile file : fileList) {
+				uploadFile(file, post.getPo_num());
+			}
+		}
+		//삭제할 첨부파일 제거
+		if(delNums == null || delNums.length == 0) {
+			return true;
+		}
+		for(int fi_num : delNums) {
+			FileVO fileVo = postDao.selectFile(fi_num);
+			if(post.getPo_num() != fileVo.getFi_po_num()) {
+				continue;
+			}
+			deleteFile(fileVo);
+		}
+		return true;
 	}
 
 	@Override
