@@ -127,10 +127,37 @@ public class PostServiceImp implements PostService {
 		if(!checkWriter(po_num, user)) {
 			return false;
 		}
-		//첨부파일 제거
 		
-		return postDao.deletePost(po_num);
+		boolean res =  postDao.deletePost(po_num);
+
+		if(!res) {
+			return false;
+		}
+
+		//첨부파일 제거
+		List<FileVO> list = postDao.selectFileList(po_num);
+		//삭제할 첨부파일이 없으면
+		if(list == null || list.size() == 0) {
+			return true;
+		}
+		
+		for(FileVO file : list) {
+			deleteFile(file);
+		}
+		
+		
+		return true;
 	}
+	private void deleteFile(FileVO file) {
+		if(file == null) {
+			return;
+		}
+		//서버에서 삭제
+		UploadFileUtils.deleteFile(uploadPath, file.getFi_name());
+		//db에서 삭제
+		postDao.deleteFile(file.getFi_num());
+	}
+
 	private boolean checkWriter(int po_num, MemberVO user) {
 		if(user == null) {
 			return false;
