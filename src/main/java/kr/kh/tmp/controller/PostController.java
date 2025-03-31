@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.tmp.model.vo.BoardVO;
 import kr.kh.tmp.model.vo.MemberVO;
@@ -48,9 +49,10 @@ public class PostController {
 		return "/post/insert";
 	}
 	@PostMapping("/insert")
-	public String insertPost(Model model, PostVO post, HttpSession session) {
+	public String insertPost(Model model, PostVO post, HttpSession session, MultipartFile[] fileList) {
+		
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		if(postService.insertPost(post, user)) {
+		if(postService.insertPost(post, user, fileList)) {
 			model.addAttribute("url", "/post/list");
 			model.addAttribute("msg", "게시글을 등록했습니다.");
 		}else {

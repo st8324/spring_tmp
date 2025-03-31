@@ -1,20 +1,29 @@
 package kr.kh.tmp.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.tmp.dao.PostDAO;
 import kr.kh.tmp.model.vo.BoardVO;
+import kr.kh.tmp.model.vo.FileVO;
 import kr.kh.tmp.model.vo.MemberVO;
 import kr.kh.tmp.model.vo.PostVO;
+import kr.kh.tmp.utils.UploadFileUtils;
 
 @Service
 public class PostServiceImp implements PostService {
 
 	@Autowired
 	private PostDAO postDao;
+	
+	@Resource
+	String uploadPath;
 
 	@Override
 	public boolean insertBoard(String name) {
@@ -54,7 +63,7 @@ public class PostServiceImp implements PostService {
 	}
 
 	@Override
-	public boolean insertPost(PostVO post, MemberVO user) {
+	public boolean insertPost(PostVO post, MemberVO user, MultipartFile[] fileList) {
 
 		if(user == null || post == null) {
 			return false;
@@ -63,9 +72,39 @@ public class PostServiceImp implements PostService {
 		post.setPo_me_id(user.getMe_id());
 		
 		boolean res = postDao.insertPost(post);
-		//추후 첨부파일 등록
 		
-		return res;
+		if(!res) {
+			return false;
+		}
+		//첨부파일이 없는 경우
+		if(fileList == null || fileList.length == 0) {
+			return true;
+		}
+		
+		//추후 첨부파일 등록
+		for(MultipartFile file : fileList) {
+			uploadFile(file, post.getPo_num());
+		}
+		
+		return true;
+	}
+
+	private void uploadFile(MultipartFile file, int po_num) {
+		if(file == null || file.getOriginalFilename().length() == 0) {
+			return;
+		}
+		
+		//서버에 업로드
+		String fi_ori_name = file.getOriginalFilename();
+		String fi_name;
+		try {
+			fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+			//DB에 추가
+			FileVO fileVo = new FileVO(po_num, fi_name, fi_ori_name);
+			postDao.insertFile(fileVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
