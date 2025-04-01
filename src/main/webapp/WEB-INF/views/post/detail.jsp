@@ -66,19 +66,26 @@
 		}
 		$(document).on("submit", ".comment-insert-form", function(e){
 			e.preventDefault();
+			var content = $(this).find("[name=content]").val();
+
 			//댓글 내용을 입력 안한 경우
+			
 			
 			$.ajax({
 				async : true,
-				url : '/경로', 
+				url : '<c:url value="/comment/insert"/>', 
 				type : 'post', 
-				data : JSON.stringify(객체), 
+				data : JSON.stringify({
+					co_po_num : cri.po_num,
+					co_content: content
+				}), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
-					console.log(data)
-				}, 
-				error : function(jqXHR, textStatus, errorThrown){
-
+					if(data){
+						alert('댓글 등록!');
+					}else{
+						alert('댓글 등록 실패!');
+					}
 				}
 			});
 		})
