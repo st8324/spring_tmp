@@ -61,7 +61,7 @@
 	</div>
 	<script type="text/javascript">
 		var cri = {
-			page : 1,
+			page : 3,
 			po_num : ${post.po_num}
 		}
 		$(document).on("submit", ".comment-insert-form", function(e){
@@ -89,6 +89,22 @@
 				}
 			});
 		})
+	</script>
+	
+	<script type="text/javascript">
+		getCommentList(cri);
+		function getCommentList(cri) {
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/list"/>', 
+				type : 'post', 
+				data : JSON.stringify(cri), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					console.log(data)
+				}
+			});
+		}
 	</script>
 </body>
 </html>

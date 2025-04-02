@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.tmp.model.vo.CommentVO;
 import kr.kh.tmp.model.vo.MemberVO;
+import kr.kh.tmp.pagination.CommentCriteria;
 import kr.kh.tmp.service.CommentService;
 
 @Controller
@@ -25,5 +26,12 @@ public class CommentController {
 	public boolean insert(@RequestBody CommentVO comment, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		return commentService.insertComment(comment, user);
+	}
+	
+	@ResponseBody
+	@PostMapping("/list")
+	public String list(@RequestBody CommentCriteria cri) {
+		System.out.println(cri);
+		return "";
 	}
 }
