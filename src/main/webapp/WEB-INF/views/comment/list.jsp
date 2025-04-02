@@ -12,7 +12,7 @@
 	<c:if test="${list.size() != 0 }">
 		<div class="comment-list">
 			<c:forEach items="${list}" var="co">
-				<div class="comment-item">
+				<div class="comment-item <c:if test="${co.co_num ne co.co_ori_num }">pl-5</c:if>">
 					<div class="comment-writer">${co.co_me_id }</div>
 					<div class="comment-content">${co.co_content }</div>
 					<div>
@@ -66,7 +66,7 @@
 			let str = `
 				<form class="comment-insert-form" data-num="\${num}">
 					<textarea name="content"></textarea>
-					<button type="submit">댓글 등록</button>
+					<button type="submit">답글 등록</button>
 				</form>
 			`;
 			$(this).parent().after(str);

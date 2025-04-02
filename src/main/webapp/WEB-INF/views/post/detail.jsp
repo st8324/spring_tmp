@@ -68,7 +68,9 @@
 			e.preventDefault();
 			var $content = $(this).find("[name=content]");
 			var content = $content.val();
-
+			var ori_num = $(this).data("num");
+			ori_num = ori_num == 'undefined' ? 0 : ori_num;
+			
 			//댓글 내용을 입력 안한 경우
 			if(content.length == 0){
 				alert("댓글 내용을 입력하세요.");
@@ -82,7 +84,8 @@
 				type : 'post', 
 				data : JSON.stringify({
 					co_po_num : cri.po_num,
-					co_content: content
+					co_content: content,
+					co_ori_num : ori_num
 				}), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
