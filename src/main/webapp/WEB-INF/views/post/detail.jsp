@@ -61,15 +61,20 @@
 	</div>
 	<script type="text/javascript">
 		var cri = {
-			page : 3,
+			page : 1,
 			po_num : ${post.po_num}
 		}
 		$(document).on("submit", ".comment-insert-form", function(e){
 			e.preventDefault();
-			var content = $(this).find("[name=content]").val();
+			var $content = $(this).find("[name=content]");
+			var content = $content.val();
 
 			//댓글 내용을 입력 안한 경우
-			
+			if(content.length == 0){
+				alert("댓글 내용을 입력하세요.");
+				$content.focus();
+				return;
+			}
 			
 			$.ajax({
 				async : true,
@@ -83,6 +88,8 @@
 				success : function (data){
 					if(data){
 						alert('댓글 등록!');
+						$content.val('');
+						getCommentList(cri);
 					}else{
 						alert('댓글 등록 실패!');
 					}
@@ -101,7 +108,7 @@
 				data : JSON.stringify(cri), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
-					console.log(data)
+					$(".comment-wrap").html(data);
 				}
 			});
 		}
