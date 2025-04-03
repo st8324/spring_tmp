@@ -79,9 +79,9 @@
 			}
 			let num = $(this).data("num");
 			let str = `
-				<form class="comment-insert-form" data-num="\${num}">
-					<textarea name="content"></textarea>
-					<button type="submit">답글 등록</button>
+				<form class="comment-insert-form input-group" data-num="\${num}">
+					<textarea name="content" class="form-control"></textarea>
+					<button type="submit" class="btn btn-outline-success">답글 등록</button>
 				</form>
 			`;
 			$(this).parent().after(str);
@@ -115,9 +115,9 @@
 			}
 			let num = $(this).data("num");
 			var str = `
-				<form class="comment-update-form" data-num="\${num}">
-					<textarea name="content">\${content}</textarea>
-					<button type="submit">댓글 수정</button>
+				<form class="comment-update-form input-group" data-num="\${num}">
+					<textarea name="content" class="form-control">\${content}</textarea>
+					<button type="submit" class="btn btn-outline-success">댓글 수정</button>
 				</form>
 			`;
 			$content.after(str);

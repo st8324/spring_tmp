@@ -45,9 +45,9 @@
 		<div class="comment-wrap">
 		
 		</div>
-		<form class="comment-insert-form">
-			<textarea name="content"></textarea>
-			<button type="submit">댓글 등록</button>
+		<form class="comment-insert-form input-group">
+			<textarea name="content" class="form-control"></textarea>
+			<button type="submit" class="btn btn-outline-success">댓글 등록</button>
 		</form>
 	</div>
 	<div class="mb-3 d-flex justify-content-between">
