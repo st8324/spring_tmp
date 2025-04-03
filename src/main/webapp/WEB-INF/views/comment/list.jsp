@@ -18,8 +18,10 @@
 						<div class="comment-content">${co.co_content }</div>
 						<div>
 							<button class="btn btn-outline-success btn-reply" data-num="${co.co_num}">답글</button>
-							<button class="btn btn-outline-warning btn-update" data-num="${co.co_num}">수정</button>
-							<button class="btn btn-outline-danger btn-delete" data-num="${co.co_num}">삭제</button>
+							<c:if test="${co.co_me_id eq user.me_id }">
+								<button class="btn btn-outline-warning btn-update" data-num="${co.co_num}">수정</button>
+								<button class="btn btn-outline-danger btn-delete" data-num="${co.co_num}">삭제</button>
+							</c:if>
 						</div>
 					</c:if>
 					<c:if test="${co.co_del ne 'N' }">
@@ -63,6 +65,14 @@
 			getCommentList(cri);
 		});
 		$(".btn-reply").click(function(e){
+			
+			if('${user.me_id}' == ''){
+				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하겠습니까?")){
+					location.href = "<c:url value="/login"/>";
+				}
+				return;
+			}
+			
 			//답글입력창이 여러개 생기는걸 방지
 			if($(this).parent().next().length != 0){
 				return;

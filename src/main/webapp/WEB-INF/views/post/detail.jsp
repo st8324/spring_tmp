@@ -66,6 +66,14 @@
 		}
 		$(document).on("submit", ".comment-insert-form", function(e){
 			e.preventDefault();
+			
+			if('${user.me_id}' == ''){
+				if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하겠습니까?")){
+					location.href = "<c:url value="/login"/>";
+				}
+				return;
+			}
+			
 			var $content = $(this).find("[name=content]");
 			var content = $content.val();
 			var ori_num = $(this).data("num");
