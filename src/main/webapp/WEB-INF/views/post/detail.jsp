@@ -116,5 +116,35 @@
 			});
 		}
 	</script>
+	
+	<script type="text/javascript">
+		$(document).on("submit", ".comment-update-form", function(e){
+			e.preventDefault();
+			var $content = $(this).find("[name=content]");
+			var content = $content.val();
+			var co_num = $(this).data("num");
+			
+
+			if(content.length == 0){
+				alert("수정할 댓글 내용을 입력하세요.");
+				$content.focus();
+				return;
+			}
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/update"/>', 
+				type : 'post', 
+				data : JSON.stringify({
+					co_content: content,
+					co_num : co_num
+				}), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					console.log(data);
+				}
+			});
+		})
+	</script>
 </body>
 </html>
