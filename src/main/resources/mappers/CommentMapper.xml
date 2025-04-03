@@ -32,4 +32,7 @@
 	<update id="deleteComment">
 		update comment set co_del = 'Y' where co_num = #{co_num}
 	</update>
+	<update id="updateComment">
+		update comment set co_content = #{co.co_content} where co_num = #{co.co_num} 
+	</update>
 </mapper>

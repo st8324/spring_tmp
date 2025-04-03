@@ -141,7 +141,12 @@
 				}), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
-					console.log(data);
+					if(data){
+						alert('댓글 수정!');
+						getCommentList(cri);
+					}else{
+						alert('댓글 수정 실패!');
+					}
 				}
 			});
 		})
