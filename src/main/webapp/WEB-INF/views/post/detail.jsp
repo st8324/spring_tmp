@@ -30,6 +30,10 @@
 		<label>조회수</label>
 		<div class="form-control">${post.po_view}</div>
 	</div>
+	<div class="form-group d-flex justify-content-center">
+		<button class="btn btn-outline-success mr-2 btn-up" data-num="${post.po_num}" data-state="1">추천</button>
+		<button class="btn btn-outline-danger ml-2 btn-down" data-num="${post.po_num}" data-state="-1">비추천</button>
+	</div>
 	<div class="form-group">
 		<label>내용</label>
 		<div class="form-control" style="min-height: 400px;">${post.po_content}</div>
@@ -59,6 +63,27 @@
 			</div>
 		</c:if>
 	</div>
+	
+	<script type="text/javascript">
+		$(".btn-up, .btn-down").click(function(e){
+			let num = $(this).data("num");
+			let state = $(this).data("state");
+			
+			$.ajax({
+				async : true, //비동기 : true(비동기), false(동기)
+				url : '<c:url value="/post/like"/>', 
+				type : 'post', 
+				data : JSON.stringify({
+					li_state : state,
+					li_po_num : num
+				}), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					console.log(data);
+				}
+			});
+		})
+	</script>
 	<script type="text/javascript">
 		var cri = {
 			page : 1,
