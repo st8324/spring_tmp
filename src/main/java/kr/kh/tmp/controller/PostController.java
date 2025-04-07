@@ -137,9 +137,8 @@ public class PostController {
 	@ResponseBody
 	@PostMapping("/like")
 	public int like(Model model, @RequestBody LikeVO like, HttpSession session) {
-		System.out.println(like);
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		return 0;
+		return postService.updateLike(like, user);
 	}
 }

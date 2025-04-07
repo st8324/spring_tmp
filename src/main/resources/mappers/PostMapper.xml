@@ -98,4 +98,7 @@
 			</when>
 		</choose>
 	</select>
+	<select id="selectLike" resultType="LikeVO">
+		select * from `like` where li_me_id = #{li_me_id} and li_po_num = #{li_po_num}
+	</select>
 </mapper>
