@@ -31,8 +31,8 @@
 		<div class="form-control">${post.po_view}</div>
 	</div>
 	<div class="form-group d-flex justify-content-center">
-		<button class="btn btn-outline-success mr-2 btn-up" data-num="${post.po_num}" data-state="1">추천</button>
-		<button class="btn btn-outline-danger ml-2 btn-down" data-num="${post.po_num}" data-state="-1">비추천</button>
+		<button class="btn btn-outline-success mr-2 btn-up" data-num="${post.po_num}" data-state="1">추천(${post.po_up })</button>
+		<button class="btn btn-outline-danger ml-2 btn-down" data-num="${post.po_num}" data-state="-1">비추천(${post.po_down })</button>
 	</div>
 	<div class="form-group">
 		<label>내용</label>
@@ -66,6 +66,12 @@
 	
 	<script type="text/javascript">
 		$(".btn-up, .btn-down").click(function(e){
+			
+			if('${user.me_id}' == ''){
+				alert("로그인이 필요한 서비스입니다.");
+				return;
+			}
+			
 			let num = $(this).data("num");
 			let state = $(this).data("state");
 			
@@ -79,7 +85,17 @@
 				}), 
 				contentType : "application/json; charset=utf-8",
 				success : function (data){
-					console.log(data);
+					switch(data){
+					case 1:
+						alert("추천!");
+						break;
+					case -1:
+						alert("비추천!");
+						break;
+					case 0:
+						alert((state == 1 ? "추천" : "비추천") + " 취소");
+					}
+					location.reload();
 				}
 			});
 		})
